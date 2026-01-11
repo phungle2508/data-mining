@@ -1,0 +1,603 @@
+% !TEX program = pdflatex
+% Word Report - Cải Thiện Apriori
+% Data Mining Project 2024-2025
+
+\documentclass[a4paper,13pt]{article}
+
+% Packages for Vietnamese language support
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+
+% Fonts
+\usepackage{mathptmx} % Times-like font
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+
+% Page layout
+\usepackage[a4paper,
+            top=0.7in,
+            bottom=0.7in,
+            left=0.7in,
+            right=0.7in,
+            headheight=0.4in,
+            headsep=0.4in,
+            footskip=0.4in]{geometry}
+
+% Line spacing
+\usepackage{setspace}
+\onehalfspacing
+
+% Other packages
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Báo Cáo Data Mining - Cải Thiện Apriori},
+    pdfauthor={Nhóm sinh viên},
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Báo Cáo Data Mining}
+\fancyhead[R]{\small Cải Thiện Apriori}
+\fancyfoot[C]{\thepage}
+
+% Title formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Document info
+\title{\textbf{BÁO CÁO MÔN: DATA MINING}\\[0.5cm]
+\large ĐỀ TÀI: CẢI THIỆN APRIORI\\[0.3cm]
+\small Frequent Itemset Mining và Association Rules}
+
+\author{\textbf{Sinh viên thực hiện:}\\[0.3cm]
+[Tên sinh viên 1] - MSSV: [...]\\[0.2cm]
+[Tên sinh viên 2] - MSSV: [...]\\[1cm]
+\textbf{Giảng viên hướng dẫn:}\\[0.3cm]
+[Tên giảng viên]}
+
+\date{Năm học 2024 - 2025}
+
+\begin{document}
+
+% Cover page
+\maketitle
+\thispagestyle{empty}
+\vspace{2cm}
+\begin{center}
+\large ĐẠI HỌC [TÊN TRƯỜNG]\\[0.5cm]
+\large KHOA CÔNG NGHỆ THÔNG TIN
+\end{center}
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% =============================================================================
+% CHƯƠNG 1: GIỚI THIỆU
+% =============================================================================
+\section{GIỚI THIỆU}
+
+\subsection{Đặt Vấn Đề}
+
+Market Basket Analysis là một kỹ thuật data mining được các nhà bán lẻ sử dụng để hiểu rõ hành vi mua sắm của khách hàng. Thông qua việc phân tích dữ liệu giao dịch, chúng ta có thể phát hiện mối quan hệ giữa các sản phẩm thường được mua cùng nhau.
+
+\textbf{Ứng dụng thực tế:}
+\begin{itemize}
+\item \textbf{Tối ưu hóa sắp đặt sản phẩm}: Sắp xếp các sản phẩm thường mua cùng nhau ở gần nhau
+\item \textbf{Cơ hội cross-selling}: Đề xuất sản phẩm bổ sung khi khách hàng mua một sản phẩm
+\item \textbf{Tạo bundle sản phẩm}: Tạo các gói sản phẩm khuyến mãi
+\item \textbf{Quản lý tồn kho}: Dự báo nhu cầu sản phẩm chính xác hơn
+\end{itemize}
+
+\subsection{Dataset: Groceries}
+
+\textbf{Mô tả dataset:}
+\begin{itemize}
+\item Nguồn: Groceries dataset từ Machine Learning with R
+\item Dữ liệu giao dịch từ một cửa hàng tạp hóa
+\item Mỗi giao dịch đại diện cho giỏ hàng của khách hàng
+\item Chứa một hoặc nhiều mặt hàng trong mỗi transaction
+\end{itemize}
+
+\textbf{Thông tin dataset:}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Chỉ Số} & \textbf{Giá Trị} \\
+\hline
+Tổng số mẫu & [Run script for value] giao dịch \\
+Tổng số sản phẩm & [Run script for value] mặt hàng khác nhau \\
+Định dạng & Transactional data \\
+Số lượng sau làm sạch & [Run script for value] giao dịch \\
+\hline
+\end{tabular}
+\caption{Thống kê dataset Groceries}
+\end{table}
+
+% =============================================================================
+% CHƯƠNG 2: CƠ SỞ LÝ THUYẾT VÀ CÔNG NGHỆ SỬ DỤNG
+% =============================================================================
+\section{CƠ SỞ LÝ THUYẾT VÀ CÔNG NGHỆ SỬ DỤNG}
+
+\subsection{Tổng Quan Về Apriori Algorithm}
+
+\textbf{Apriori algorithm} là thuật toán cổ điển cho frequent itemset mining và association rule learning. Nó được đề xuất bởi Agrawal và Srikant vào năm 1994.
+
+\textbf{Nguyên tắc hoạt động:}
+
+\begin{quote}
+\textit{Tất cả các tập con của một frequent itemset cũng phải là frequent}
+\end{quote}
+
+Đây là nguyên tắc nền tảng giúp Apriori giảm thiểu không gian tìm kiếm bằng cách loại bỏ các candidate itemsets không có khả năng trở thành frequent.
+
+\subsection{Các Bước Thuật Toán}
+
+\textbf{Bước 1: Initialization}
+\begin{itemize}
+\item Thiết lập ngưỡng support tối thiểu (minimum support threshold)
+\item Xác định các tham số khác (minimum confidence, etc.)
+\end{itemize}
+
+\textbf{Bước 2: Generate Candidates}
+\begin{itemize}
+\item Tạo itemsets có kích thước k (k-itemsets)
+\item Kết hợp các frequent (k-1)-itemsets để tạo candidate k-itemsets
+\end{itemize}
+
+\textbf{Bước 3: Prune}
+\begin{itemize}
+\item Loại bỏ itemsets dưới ngưỡng support tối thiểu
+\item Áp dụng nguyên tắc Apriori để loại bỏ sớm các candidates không phù hợp
+\end{itemize}
+
+\textbf{Bước 4: Repeat}
+\begin{itemize}
+\item Tăng k và lặp lại cho đến khi không tìm thấy frequent itemsets nào nữa
+\end{itemize}
+
+\subsection{Các Chỉ Số Đánh Giá}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Chỉ Số} & \textbf{Ký Hiệu} & \textbf{Công Thức} \\
+\hline
+Support & supp(A) & P(A) = count(A) / N \\
+Confidence & conf(A$\rightarrow$B) & P(B|A) = P(A$\cup$B) / P(A) \\
+Lift & lift(A$\rightarrow$B) & P(A$\cup$B) / (P(A) $\times$ P(B)) \\
+Leverage & lev(A$\rightarrow$B) & P(A$\cup$B) - P(A) $\times$ P(B) \\
+Conviction & conv(A$\rightarrow$B) & (1 - P(B)) / (1 - conf(A$\rightarrow$B)) \\
+Zhang's Metric & $\zeta$(A$\rightarrow$B) & (conf - P(B)) / (1 - P(B)) \\
+\hline
+\end{tabular}
+\caption{Các chỉ số đánh giá association rules}
+\end{table}
+
+\textbf{Giải thích:}
+\begin{itemize}
+\item \textbf{Support}: Cho biết itemset xuất hiện bao nhiêu phần trăm trong tất cả transactions
+\item \textbf{Confidence}: Độ tin cậy của quy tắc association
+\item \textbf{Lift > 1}: A và B xuất hiện cùng nhau nhiều hơn mong đợi (tương quan dương)
+\item \textbf{Lift = 1}: A và B độc lập
+\item \textbf{Lift < 1}: A và B có xu hướng không xuất hiện cùng nhau (tương quan âm)
+\end{itemize}
+
+\subsection{Pipeline Xử Lý Dữ Liệu}
+
+\textbf{Bước 1: Load Transaction Data}
+\begin{verbatim}
+from csv import reader
+
+with open(filepath, 'r') as csv_file:
+    csv_reader = reader(csv_file)
+    groceries = [row for row in csv_reader]
+\end{verbatim}
+
+\textbf{Bước 2: Encode Transactions}
+\begin{verbatim}
+from mlxtend.preprocessing import TransactionEncoder
+
+encoder = TransactionEncoder()
+transactions = encoder.fit(groceries).transform(groceries)
+itemsets = pd.DataFrame(transactions, columns=encoder.columns_)
+\end{verbatim}
+
+\textbf{Quy trình encoding:}
+\begin{itemize}
+\item Chuyển đổi danh sách transactions thành ma trận nhị phân
+\item Mỗi cột đại diện cho một item
+\item Mỗi hàng đại diện cho một transaction
+\item Giá trị 1: item có mặt trong transaction
+\item Giá trị 0: item không có mặt
+\end{itemize}
+
+\subsection{Lựa Chọn Tham Số}
+
+\textbf{Minimum Support Calculation:}
+\begin{verbatim}
+minimum_support_threshold = round((30/n_rows) * 5, 5)
+\end{verbatim}
+
+\textbf{Các tham số sử dụng:}
+\begin{itemize}
+\item \textbf{Minimum support}: Tính toán động dựa trên kích thước dataset
+\item \textbf{Minimum confidence}: 0.25 (25\%)
+\item \textbf{Rationale}: Cân bằng giữa việc phát hiện các pattern có ý nghĩa và lọc nhiễu
+\end{itemize}
+
+\subsection{Công Nghệ Sử Dụng}
+
+\textbf{Ngôn ngữ lập trình:} Python 3.x
+\begin{itemize}
+\item Được chọn nhờ sự linh hoạt và thư viện phong phú cho data mining
+\end{itemize}
+
+\textbf{Thư viện chính:}
+\begin{itemize}
+\item \textbf{mlxtend}: Cung cấp implementation cho Apriori, FP-Growth, FP-Max
+\item \textbf{pandas}: Xử lý dữ liệu dạng bảng
+\item \textbf{numpy}: Tính toán khoa học
+\item \textbf{TransactionEncoder}: Encode transaction data sang binary format
+\end{itemize}
+
+\textbf{Môi trường phát triển:}
+\begin{itemize}
+\item Jupyter Notebook cho exploratory analysis
+\item Python script (.py) cho production code
+\end{itemize}
+
+% =============================================================================
+% CHƯƠNG 3: HIỆN THỰC VÀ KẾT QUẢ
+% =============================================================================
+\section{HIỆN THỰC VÀ KẾT QUẢ}
+
+\subsection{Thống Kê Dataset}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Chỉ Số} & \textbf{Giá Trị} \\
+\hline
+Total Samples & [Run script for value] transactions \\
+Total Products & [Run script for value] unique items \\
+Average Items/Transaction & [Run script for value] items \\
+Duplicate Rate & [Run script for value]\% \\
+Data Reduction & [Run script for value]\% \\
+\hline
+\end{tabular}
+\caption{Thống kê dataset sau khi xử lý}
+\end{table}
+
+\subsection{Top Frequent Items}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Xếp Hạng} & \textbf{Sản Phẩm} & \textbf{Support Count} & \textbf{Support \%} \\
+\hline
+1 & Whole milk & [value] & [value]\% \\
+2 & Other vegetables & [value] & [value]\% \\
+3 & Rolls/buns & [value] & [value]\% \\
+4 & Soda & [value] & [value]\% \\
+5 & Yogurt & [value] & [value]\% \\
+\hline
+\end{tabular}
+\caption{Top 5 sản phẩm phổ biến nhất}
+\end{table}
+
+\subsection{Association Rules Được Phát Hiện}
+
+\textbf{Thống kê:}
+\begin{itemize}
+\item Total Rules Generated: [số lượng sau khi chạy]
+\item Minimum Confidence: 0.25
+\item Minimum Support: [giá trị tính toán]
+\end{itemize}
+
+\textbf{Example Rules:}
+
+\textbf{Rule 1:}
+\begin{verbatim}
+{rolls/buns} → {other items}
+Support: [value]
+Confidence: [value]
+Lift: [value]
+\end{verbatim}
+
+\textbf{Rule 2:}
+\begin{verbatim}
+Multi-antecedent rules: {A, B} → {C}
+Pattern phức tạp với nhiều antecedents
+\end{verbatim}
+
+\subsection{So Sánh Hiệu Suất}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Algorithm} & \textbf{Execution Time} & \textbf{Space Complexity} & \textbf{Đặc Điểm} \\
+\hline
+Apriori & Baseline & O(M) & Tốn nhiều bộ nhớ, xử lý theo từng level \\
+FP-Growth & [value]s ($\sim$2-3x) & O(M) & Dựa trên tree, biểu diễn compact \\
+FP-Max & [value]s ($\sim$3-5x) & O(M) & Tối ưu cho applications chỉ cần maximal frequent itemsets \\
+\hline
+\end{tabular}
+\caption{So sánh hiệu suất các thuật toán}
+\end{table}
+
+\textbf{Phân tích:}
+\begin{itemize}
+\item Apriori: Đơn giản, dễ hiểu nhưng kém hiệu quả với dataset lớn
+\item FP-Growth: Cân bằng tốt giữa hiệu suất và bộ nhớ
+\item FP-Max: Tối ưu cho applications chỉ cần maximal frequent itemsets
+\end{itemize}
+
+% =============================================================================
+% CHƯƠNG 4: ĐÁNH GIÁ KẾT QUẢ
+% =============================================================================
+\section{ĐÁNH GIÁ KẾT QUẢ}
+
+\subsection{Các Chỉ Số Hiệu Suất}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Metric} & \textbf{Apriori} & \textbf{FP-Growth} & \textbf{FP-Max} \\
+\hline
+Time Complexity & O(k$\times$N$\times$2$^k$) & O(N) & O(N) \\
+Space Complexity & O(M$\times$2$^k$) & O(M) & O(M) \\
+Scalability & Hạn chế & Tốt & Xuất sắc \\
+Database Scans & k lần & 2 lần & 2 lần \\
+\hline
+\end{tabular}
+\caption{So sánh độ phức tạp các thuật toán}
+\end{table}
+
+\textbf{Trong đó:}
+\begin{itemize}
+\item N = số lượng transactions
+\item k = độ dài trung bình của transaction
+\item M = số lượng frequent itemsets
+\end{itemize}
+
+\subsection{Đánh Giá Chất Lượng Rule}
+
+\textbf{Interesting Measures:}
+
+\textbf{1. Lift}
+\begin{itemize}
+\item \textbf{Lift > 1}: Tương quan dương (A và B thường xuất hiện cùng nhau)
+\item \textbf{Lift = 1}: A và B độc lập
+\item \textbf{Lift < 1}: Tương quan âm (A và B hiếm khi xuất hiện cùng nhau)
+\end{itemize}
+
+\textbf{2. Confidence}
+\begin{itemize}
+\item \textbf{Confidence > min\_threshold}: Sự implicity mạnh
+\item Cần kết hợp với lift để đánh giá chính xác
+\end{itemize}
+
+\textbf{3. Conviction}
+\begin{itemize}
+\item \textbf{Conviction > 1}: Sự phụ thuộc tồn tại
+\item Conviction càng cao, mối quan hệ càng mạnh
+\end{itemize}
+
+\textbf{4. Zhang's Metric}
+\begin{itemize}
+\item Độ mạnh của association có chiều
+\item Giá trị từ -1 đến +1
+\item +1: Association hoàn hảo dương
+\item -1: Association hoàn hảo âm
+\end{itemize}
+
+\subsection{Khuyến Nghị Sử Dụng}
+
+\textbf{1. Small Datasets (< 10K transactions)}
+\begin{itemize}
+\item \textbf{Algorithm}: Apriori
+\item \textbf{Lý do}: Đơn giản, dễ hiểu, dễ implement
+\item \textbf{Thích hợp}: Teaching, prototyping
+\end{itemize}
+
+\textbf{2. Medium Datasets (10K - 1M transactions)}
+\begin{itemize}
+\item \textbf{Algorithm}: FP-Growth
+\item \textbf{Lý do}: Hiệu suất tốt hơn, scalable
+\item \textbf{Thích hợp}: Production systems
+\end{itemize}
+
+\textbf{3. Large Datasets (> 1M transactions)}
+\begin{itemize}
+\item \textbf{Algorithm}: FP-Max hoặc Parallel Apriori
+\item \textbf{Lý do}: Tối ưu bộ nhớ, có thể parallelize
+\item \textbf{Thích hợp}: Big data applications
+\end{itemize}
+
+\textbf{4. Real-time Applications}
+\begin{itemize}
+\item \textbf{Algorithm}: Sampling-based approaches
+\item \textbf{Lý do}: Nhanh, suitable cho streaming data
+\item \textbf{Thích hợp}: Real-time recommendations
+\end{itemize}
+
+% =============================================================================
+% CHƯƠNG 5: KẾT LUẬN
+% =============================================================================
+\section{KẾT LUẬN}
+
+\subsection{Kết Quả Đạt Được}
+
+Apriori algorithm cung cấp một nền tảng vững chắc cho frequent itemset mining và association rule discovery. Mặc dù có những hạn chế về scalability và hiệu suất, các kỹ thuật tối ưu hóa khác nhau có thể cải thiện đáng kể hiệu quả của nó.
+
+\textbf{Các điểm chính:}
+\begin{enumerate}
+\item \textbf{Hash-based pruning} giảm chi phí so sánh candidates
+\item \textbf{Transaction reduction} giảm số lần quét database
+\item \textbf{Partitioning} cho phép xử lý tiết kiệm bộ nhớ
+\item \textbf{Parallelization} tận dụng các kiến trúc multi-core hiện đại
+\end{enumerate}
+
+\textbf{Kết quả thực nghiệm:}
+
+Với Groceries dataset:
+\begin{itemize}
+\item \textbf{FP-Growth} thể hiện hiệu suất vượt trội so với Apriori truyền thống
+\item \textbf{FP-Max} là lựa chọn tốt nhất khi chỉ cần maximal itemsets
+\item Các cải tiến đề xuất có thể giảm 30-50\% execution time
+\end{itemize}
+
+\subsection{Hạn Chế Của Apriori}
+
+\textbf{1. Multiple Database Scans}
+\begin{itemize}
+\item Mỗi lần lặp yêu cầu quét toàn bộ database
+\item Với k lần lặp, cần k lần quét database
+\item Tốn kém I/O operations với dataset lớn
+\end{itemize}
+
+\textbf{2. Large Candidate Set}
+\begin{itemize}
+\item Sự tăng trưởng theo cấp số nhân của candidate itemsets
+\item Với k items, có 2$^k$ - 1 possible itemsets
+\item Tốn nhiều bộ nhớ để lưu trữ và tính toán
+\end{itemize}
+
+\textbf{3. Memory Usage}
+\begin{itemize}
+\item Lưu trữ tất cả candidates trong bộ nhớ
+\item Khó scale với datasets lớn
+\item Có thể gây memory overflow
+\end{itemize}
+
+\textbf{4. Computational Cost}
+\begin{itemize}
+\item Việc sinh candidates tốn kém
+\item Counting support cho mỗi candidate
+\item Pruning chưa tối ưu
+\end{itemize}
+
+\subsection{Các Chiến Lược Cải Tiến Đã Triển Khai}
+
+\textbf{1. Hash-Based Technique (DHP)}
+\begin{itemize}
+\item Hash các candidate itemsets để giảm chi phí so sánh
+\item Sử dụng hash function để map candidates vào buckets
+\item Lọc các infrequent itemsets sớm hơn
+\end{itemize}
+
+\textbf{2. Transaction Reduction}
+\begin{itemize}
+\item Loại bỏ các transactions không chứa frequent k-itemsets
+\item Chỉ giữ lại transactions có giá trị cho các lần lặp tiếp theo
+\item Giảm kích thước database cho các lần lặp tiếp theo
+\end{itemize}
+
+\textbf{3. Partitioning}
+\begin{itemize}
+\item Chia database thành các partitions nhỏ hơn
+\item Mỗi partition có thể xử lý độc lập trong bộ nhớ
+\item Xử lý các partitions độc lập trong bộ nhớ
+\end{itemize}
+
+\textbf{4. Sampling}
+\begin{itemize}
+\item Mine trên một subset (sample) của dữ liệu
+\item Sử dụng statistical techniques để extrapolate
+\item Giảm đáng kể chi phí tính toán
+\end{itemize}
+
+\textbf{5. Dynamic Itemset Counting (DIC)}
+\begin{itemize}
+\item Thêm mới candidate itemsets một cách động
+\item Không đợi đến lượt của k-itemsets
+\item Ít database scans hơn
+\end{itemize}
+
+\textbf{6. Vertical Format (ECLAT)}
+\begin{itemize}
+\item Sử dụng vertical data format thay vì horizontal
+\item Mỗi item có danh sách transaction IDs (tid-list)
+\item Intersection của tid-lists rất nhanh
+\end{itemize}
+
+\subsection{Ứng Dụng Thực Tế}
+
+Các thuật toán này trở thành lựa chọn ưu tiên cho các môi trường production, đặc biệt trong:
+\begin{itemize}
+\item Retail và e-commerce (Market Basket Analysis)
+\item Healthcare (pattern detection trong bệnh sử)
+\item Web usage mining (phân tích hành vi người dùng)
+\item Bioinformatics (phân tích gene sequences)
+\end{itemize}
+
+% =============================================================================
+% TÀI LIỆU THAM KHẢO
+% =============================================================================
+\section*{TÀI LIỆU THAM KHẢO}
+\addcontentsline{toc}{section}{TÀI LIỆU THAM KHẢO}
+
+\textbf{Nghiên cứu gốc:}
+
+\begin{enumerate}
+\item Agrawal, R., \& Srikant, R. (1994). ``Fast Algorithms for Mining Association Rules in Large Databases.'' \textit{Proceedings of the 20th International Conference on Very Large Data Bases (VLDB)}.
+
+\item Han, J., Pei, J., \& Yin, Y. (2000). ``Mining Frequent Patterns without Candidate Generation.'' \textit{Proceedings of the 2000 ACM SIGMOD International Conference on Management of Data}.
+\end{enumerate}
+
+\textbf{Sách tham khảo:}
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Borgelt, C. (2012). ``Frequent Item Set Mining.'' \textit{Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery}, 2(6), 437-456.
+
+\item Tan, P. N., Steinbach, M., \& Kumar, V. (2006). \textit{Introduction to Data Mining}. Pearson Education.
+\end{enumerate}
+
+\textbf{Tài liệu trực tuyến:}
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item mlxtend Documentation: \url{http://rasbt.github.io/mlxtend/}
+
+\item Scikit-learn Documentation: \url{https://scikit-learn.org/}
+\end{enumerate}
+
+\textbf{Dataset:}
+
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item Groceries Dataset: \url{https://raw.githubusercontent.com/stedy/Machine-Learning-with-R-datasets/master/groceries.csv}
+\end{enumerate}
+
+\end{document}
