@@ -1,9 +1,9 @@
-PWD /home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt
+PWD /home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/tex
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/ppt_slides.tex
+INPUT /home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/tex/ppt_slides.tex
 OUTPUT ppt_slides.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls

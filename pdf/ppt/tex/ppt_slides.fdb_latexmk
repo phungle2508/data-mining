@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1768150719.79152 "/home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/ppt_slides.tex" "ppt_slides.pdf" "ppt_slides" 1768150722.26054 0
+["pdflatex"] 1768151120.3706 "/home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/tex/ppt_slides.tex" "ppt_slides.pdf" "ppt_slides" 1768151122.34759 0
   "/etc/texmf/web2c/texmf.cnf" 1763905416.59649 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/ppt_slides.tex" 1768150719.4301 13920 dff58d6b2f0a082b71eed3196852c691 ""
+  "/home/phungvip/Desktop/workspace2/data-mining-project/pdf/ppt/tex/ppt_slides.tex" 1768150719.4301 13920 dff58d6b2f0a082b71eed3196852c691 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/vntex/t5.enc" 1136849721 7824 21ade6c3c7fd67cb4ace8dbc91c53118 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/helvetic/phvr7t.tfm" 1136768653 2520 53e01eef820ca829e42c1333c3fd02b9 ""
@@ -247,11 +247,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1766488664 198341 42d69474941b2ac8ebd9d4d42a15bc3e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1766488720 2103974 6e9b5525adf17c57728bacad06738619 ""
-  "ppt_slides.aux" 1768150722.15871 5400 0c1a9055bfd9d93c2840bc0bfb976b81 "pdflatex"
-  "ppt_slides.nav" 1768150722.16055 3348 e3fe19e55605f10af960bf51b0085d27 "pdflatex"
-  "ppt_slides.out" 1768150722.15935 947 8b5062041670627698f62a7fd33cf4ff "pdflatex"
+  "ppt_slides.aux" 1768151122.26553 5400 0c1a9055bfd9d93c2840bc0bfb976b81 "pdflatex"
+  "ppt_slides.nav" 1768151122.26711 3348 e3fe19e55605f10af960bf51b0085d27 "pdflatex"
+  "ppt_slides.out" 1768151122.26602 947 8b5062041670627698f62a7fd33cf4ff "pdflatex"
   "ppt_slides.tex" 1768150719.4301 13920 dff58d6b2f0a082b71eed3196852c691 ""
-  "ppt_slides.toc" 1768150722.16055 431 ce9a69617cfb3d1d0669b47bd7c7e0c1 "pdflatex"
+  "ppt_slides.toc" 1768151122.26711 431 ce9a69617cfb3d1d0669b47bd7c7e0c1 "pdflatex"
   (generated)
   "ppt_slides.aux"
   "ppt_slides.log"
