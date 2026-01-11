@@ -1,0 +1,8 @@
+\babel@toc {vietnamese}{}\relax 
+\beamer@sectionintoc {1}{GIỚI THIỆU}{3}{0}{1}
+\beamer@sectionintoc {2}{PHƯƠNG PHÁP: APRIORI ALGORITHM}{6}{0}{2}
+\beamer@sectionintoc {3}{TRIỂN KHAI}{10}{0}{3}
+\beamer@sectionintoc {4}{HẠN CHẾ CỦA APRIORI}{23}{0}{4}
+\beamer@sectionintoc {5}{CÁCH CẢI THIỆN}{24}{0}{5}
+\beamer@sectionintoc {6}{KHUYẾN NGHỊ SỬ DỤNG}{30}{0}{6}
+\beamer@sectionintoc {7}{KẾT LUẬN}{31}{0}{7}
