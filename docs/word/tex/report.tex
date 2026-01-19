@@ -76,32 +76,45 @@
 \begin{document}
 
 \begin{titlepage}
-    \centering
-    \vspace*{2cm}
+\centering
 
-    {\Huge\textbf{ĐẠI HỌC [TÊN TRƯỜNG]}}\\[0.5cm]
+% ===== Header =====
+{\Large \textbf{TRƯỜNG ĐẠI HỌC NÔNG LÂM TP. HỒ CHÍ MINH}}\\[0.3cm]
+{\Large \textbf{KHOA CÔNG NGHỆ THÔNG TIN}}\\[0.5cm]
 
-    {\Large\textbf{KHOA CÔNG NGHỆ THÔNG TIN}}\\[2cm]
+\rule{0.6\textwidth}{0.4pt}
 
-    {\Huge\textbf{BÁO CÁO MÔN: DATA MINING}}\\[1cm]
+\vspace{1.8cm}
 
-    {\Large\textbf{ĐỀ TÀI:}}\\[0.5cm]
+% ===== Title =====
+{\LARGE \textbf{BÁO CÁO}}\\[1cm]
 
-    {\Huge\textbf{\textcolor{blue}{CẢI THIỆN APRIORI}}}\\[0.3cm]
+{\Large \textbf{CHỦ ĐỀ:} \textit{CẢI THIỆN THUẬT TOÁN APRIORI}}\\[0.4cm]
+{\Large \textbf{Môn học: Data Mining}}\\[1.5cm]
 
-    {\Large Frequent Itemset Mining và Association Rules}\\[2cm]
+% ===== Instructor =====
+\begin{flushleft}
+\textbf{Giảng viên phụ trách:} ThS. Trần Quốc Việt
+\end{flushleft}
 
-    \rule{0.7\textwidth}{0.4pt}\\[1cm]
+\vspace{1.5cm}
 
-    \textbf{Sinh viên thực hiện:}\\[0.5cm]
-    [Tên sinh viên 1] - MSSV: [...]\\[0.2cm]
-    [Tên sinh viên 2] - MSSV: [...]\\[1cm]
+% ===== Semester =====
+{\Large \textbf{Học kỳ: 1 / 2025 -- 2026}}\\[2cm]
 
-    \textbf{Giảng viên hướng dẫn:}\\[0.5cm]
-    [Tên giảng viên]\\[2cm]
+% ===== Students =====
 
-    {\large\textbf{Năm học 2024 - 2025}}
+
+\begin{flushleft}
+\textbf{Danh sách sinh viên thực hiện:}\\[0.4cm]
+Lê Đình Phùng -- MSSV: 18130181
+\end{flushleft}
+
+
+
+\vfill
 \end{titlepage}
+
 
 % =============================================================================
 % TABLE OF CONTENTS
@@ -178,6 +191,7 @@ Data Reduction & 30.19\% \\
 Đây là nguyên tắc nền tảng giúp Apriori giảm thiểu không gian tìm kiếm bằng cách loại bỏ các candidate itemsets không có khả năng trở thành frequent.
 
 \section{Các Bước Thuật Toán}
+\textbf{}
 
 \textbf{Bước 1: Initialization}
 \begin{itemize}
@@ -230,6 +244,7 @@ Conviction & conv(A$\to$B) & (1 - P(B)) / (1 - conf) \\
 \end{itemize}
 
 \section{Pipeline Xử Lý Dữ Liệu}
+\textbf{}
 
 \textbf{Bước 1: Load Transaction Data}
 \begin{lstlisting}[language=Python]
@@ -350,7 +365,7 @@ minimum_support_threshold = round((30/n_rows) * 5, 5)
 \textbf{Triển khai Apriori:}
 \begin{lstlisting}[language=Python]
 from mlxtend.frequent_patterns import apriori
-
+// minimum_support_threshold = 0.02185
 freq_itemsets = apriori(itemsets, minimum_support_threshold, use_colnames=True)
 \end{lstlisting}
 
@@ -514,6 +529,7 @@ Với Groceries dataset:
 
 \section{Hạn Chế Của Apriori}
 
+\textbf{}
 \textbf{1. Multiple Database Scans}
 \begin{itemize}
     \item Mỗi lần lặp yêu cầu quét toàn bộ database
@@ -545,6 +561,8 @@ Với Groceries dataset:
 \section{Các Chiến Lược Cải Tiến}
 
 \subsection{Hash-Based Technique (DHP)}
+\textbf{}
+
 
 \textbf{Concept:}
 \begin{itemize}
@@ -560,6 +578,7 @@ Với Groceries dataset:
 \end{itemize}
 
 \subsection{Transaction Reduction}
+\textbf{}
 
 \textbf{Concept:}
 \begin{itemize}
@@ -575,6 +594,7 @@ Với Groceries dataset:
 \end{itemize}
 
 \subsection{Partitioning}
+\textbf{}
 
 \textbf{Concept:}
 \begin{itemize}
@@ -590,6 +610,7 @@ Với Groceries dataset:
 \end{itemize}
 
 \subsection{Sampling}
+\textbf{}
 
 \textbf{Concept:}
 \begin{itemize}
@@ -605,6 +626,7 @@ Với Groceries dataset:
 \end{itemize}
 
 \subsection{Dynamic Itemset Counting (DIC)}
+\textbf{}
 
 \textbf{Concept:}
 \begin{itemize}
@@ -620,6 +642,7 @@ Với Groceries dataset:
 \end{itemize}
 
 \subsection{Vertical Format (ECLAT)}
+\textbf{}
 
 \textbf{Concept:}
 \begin{itemize}
@@ -635,6 +658,7 @@ Với Groceries dataset:
 \end{itemize}
 
 \section{Khuyến Nghị Sử Dụng}
+\textbf{}
 
 \textbf{1. Small Datasets (< 10K transactions)}
 \begin{itemize}

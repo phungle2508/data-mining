@@ -1100,7 +1100,7 @@ def partitioning_apriori(df, min_support, n_partitions=5):
         # A local itemset with support s_local might have global support >= min_support
         partition_min_support = min_support * 0.5  # More lenient threshold
 
-        local_freq = fpgrowth(partition_df, min_support=partition_min_support, use_colnames=True)
+        local_freq = apriori(partition_df, min_support=partition_min_support, use_colnames=True)
 
         for itemset in local_freq['itemsets']:
             all_candidates.add(itemset)

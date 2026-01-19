@@ -31,35 +31,54 @@
 % Hyperlink setup
 \hypersetup{
     colorlinks=true,
-    linkcolor=white,
+    linkcolor=cyan,
     urlcolor=cyan,
 }
-
-% Metadata
+\setbeamertemplate{blocks}[default]
+\setbeamercolor{block title}{bg=white, fg=black}
+\setbeamercolor{block body}{bg=white}
+\setbeamerfont{section in toc}{series=\bfseries}
+\setbeamercolor{section in toc}{fg=black}% Metadata
 \title[Cải Thiện Apriori]{CẢI THIỆN APRIORI}
 \subtitle{Frequent Itemset Mining và Association Rules}
-\author{Nhóm [Tên nhóm]}
-\institute[ĐH Tên Trường]{Môn: Data Mining -- Đề tài: Market Basket Analysis}
-\date{Năm học 2024 - 2025}
-
+\author{Lê Đình Phùng -- 18130181 }
+\date{Năm học 2025--2026}
 \begin{document}
 
 % =============================================================================
 % SLIDE 1: TITLE SLIDE
 % =============================================================================
 \begin{frame}
-  \titlepage
-  \begin{center}
-    \small
-    \textbf{Thành viên:}\par
-    [Tên thành viên 1] - MSSV: [...]\par
-    [Tên thành viên 2] - MSSV: [...]\par
-    [Tên thành viên 3] - MSSV: [...]\par
-    \vspace{0.5cm}
-    \textbf{Giảng viên hướng dẫn:}\par
-    [Tên giảng viên]
-  \end{center}
+\centering
+
+
+% ===== Title =====
+{\LARGE \textbf{BÁO CÁO}}\par
+\vspace{1cm}
+
+{\Large \textbf{CHỦ ĐỀ:} \textit{CẢI THIỆN THUẬT TOÁN APRIORI}}\par
+\vspace{0.4cm}
+{\Large \textbf{Môn học: Data Mining}}\par
+
+\vspace{1.4cm}
+
+% ===== Instructor =====
+\begin{flushleft}
+\textbf{Giảng viên phụ trách:} ThS. Trần Quốc Việt
+\end{flushleft}
+
+
+
+\vspace{1.2cm}
+
+% ===== Student =====
+\begin{flushleft}
+\textbf{Sinh viên thực hiện:}\\
+Lê Đình Phùng -- MSSV: 18130181
+\end{flushleft}
+
 \end{frame}
+
 
 % =============================================================================
 % SLIDE 2: TABLE OF CONTENTS
@@ -76,9 +95,9 @@
 \begin{frame}{GIỚI THIỆU}
   \begin{block}{Market Basket Analysis là gì?}
     \begin{itemize}
-      \item Kỹ thuật data mining trong retail
-      \item Phân tích hành vi mua sắm khách hàng
-      \item Phát hiện sản phẩm thường mua cùng nhau
+      \item Kỹ thuật data mining trong lĩnh vực bán lẻ (retail)
+      \item Phân tích hành vi mua sắm của khách hàng
+      \item Phát hiện các sản phẩm thường được mua cùng nhau
     \end{itemize}
   \end{block}
 
@@ -94,17 +113,17 @@
   \end{alertblock}
 \end{frame}
 
-\begin{frame}{DATASET: GROCERIES}
+\begin{frame}{TẬP DỮ LIỆU: GROCERIES}
   \begin{columns}
-    \column{0.5\textwidth}
-      \textbf{Thông tin dataset:}
+    \column{0.55\textwidth}
+      \textbf{Thông tin tập dữ liệu:}
       \begin{itemize}
         \item Nguồn: Machine Learning with R
-        \item Loại: Transactional data
-        \item Domain: Retail grocery store
+        \item Loại: Dữ liệu giao dịch (Transactional data)
+        \item Lĩnh vực: Cửa hàng tạp hóa (Retail grocery store)
       \end{itemize}
 
-    \column{0.5\textwidth}
+    \column{0.45\textwidth}
       \textbf{Thống kê:}
       \begin{itemize}
         \item [Run script] transactions
@@ -122,7 +141,7 @@
   \end{exampleblock}
 \end{frame}
 
-\begin{frame}{INDIVIDUAL PRODUCT OCCURRENCE}
+\begin{frame}{THAM SỐ XUẤT HIỆN CỦA TỪNG SẢN PHẨM}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/01_individual_product_occurrence.png}
   \end{center}
@@ -131,12 +150,12 @@
 % =============================================================================
 % SECTION 2: PHƯƠNG PHÁP
 % =============================================================================
-\section{PHƯƠNG PHÁP: APRIORI ALGORITHM}
+\section{PHƯƠNG PHÁP: THUẬT TOÁN APRIORI}
 
-\begin{frame}{APRIORI ALGORITHM}
+\begin{frame}{THUẬT TOÁN APRIORI}
   \begin{block}{Nguyên tắc cơ bản:}
     \centering
-    \textit{``Tất cả các tập con của một frequent itemset cũng phải là frequent''}
+    \textit{``Tất cả các tập con của một frequent itemset đều phải frequent''}
   \end{block}
 
   \vspace{0.3cm}
@@ -146,40 +165,40 @@
       \textbf{Ưu điểm:}
       \begin{itemize}
         \item[$\checkmark$] Đơn giản, dễ hiểu
-        \item[$\checkmark$] Dễ implement
-        \item[$\checkmark$] Tốt cho dataset nhỏ
+        \item[$\checkmark$] Dễ triển khai (implement)
+        \item[$\checkmark$] Hiệu quả với dataset nhỏ
       \end{itemize}
 
     \column{0.5\textwidth}
       \textbf{Nhược điểm:}
       \begin{itemize}
-        \item[$\times$] Multiple database scans
-        \item[$\times$] Large candidate sets
+        \item[$\times$] Phải quét cơ sở dữ liệu nhiều lần
+        \item[$\times$] Tập ứng viên (candidate sets) lớn
         \item[$\times$] Tốn nhiều bộ nhớ
       \end{itemize}
   \end{columns}
 \end{frame}
 
 \begin{frame}{CÁC BƯỚC THUẬT TOÁN}
-  \textbf{1. Initialization}
+  \textbf{1. Khởi tạo (Initialization)}
   \begin{itemize}
-    \item Thiết lập minimum support threshold
+    \item Thiết lập ngưỡng hỗ trợ tối thiểu (minimum support threshold)
   \end{itemize}
 
-  \textbf{2. Generate Candidates}
+  \textbf{2. Sinh ứng viên (Generate Candidates)}
   \begin{itemize}
     \item Tạo k-itemsets từ (k-1)-itemsets
   \end{itemize}
 
-  \textbf{3. Prune}
+  \textbf{3. Tỉa cành (Prune)}
   \begin{itemize}
-    \item Loại bỏ items < minimum support
-    \item Áp dụng Apriori principle
+    \item Loại bỏ các items có support < ngưỡng tối thiểu
+    \item Áp dụng nguyên tắc Apriori (Apriori principle)
   \end{itemize}
 
-  \textbf{4. Repeat}
+  \textbf{4. Lặp lại (Repeat)}
   \begin{itemize}
-    \item Tăng k cho đến khi không tìm thấy frequent items
+    \item Tăng k cho đến khi không còn tìm thấy frequent items
   \end{itemize}
 \end{frame}
 
@@ -189,13 +208,13 @@
     \small
     \begin{tabular}{|l|l|l|}
     \hline
-    \textbf{Metric} & \textbf{Mô Tả} & \textbf{Công Thức} \\
+    \textbf{Chỉ Số} & \textbf{Mô Tả} & \textbf{Công Thức} \\
     \hline
-    Support & Tần suất & P(A$\cup$B) \\
-    Confidence & Xác suất & P(B|A) \\
-    Lift & Độ mạnh & $\frac{P(A\cup B)}{P(A)P(B)}$ \\
-    Leverage & Quan sát & $P(A\cup B)-P(A)P(B)$ \\
-    Conviction & Phụ thuộc & $\frac{1-P(B)}{1-conf}$ \\
+    Support & Độ hỗ trợ & P(A$\cup$B) \\
+    Confidence & Độ tin cậy & P(B|A) \\
+    Lift & Độ nâng & $\frac{P(A\cup B)}{P(A)P(B)}$ \\
+    Leverage & Đòn bẩy & $P(A\cup B)-P(A)P(B)$ \\
+    Conviction & Độ xác tín & $\frac{1-P(B)}{1-conf}$ \\
     \hline
     \end{tabular}
   \end{table}
@@ -210,31 +229,49 @@
 \end{frame}
 
 \begin{frame}{PIPELINE XỬ LÝ DỮ LIỆU}
-  \begin{center}
-  \begin{tikzpicture}[node distance=1.5cm, auto]
-    \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=6em, text centered, rounded corners, minimum height=3em]
-    \tikzstyle{line} = [draw, -latex', thick]
+\centering
 
-    \node [block] (load) {Load Data\\groceries.csv};
-    \node [block, below of=load] (encode) {Encode\\TransactionEncoder};
-    \node [block, below of=encode] (clean) {Cleaning\\7-step process};
-    \node [block, below of=clean] (mine) {Mining\\Apriori / FP-Growth};
-    \node [block, below of=mine] (rules) {Rules\\Association Rules};
+\begin{tikzpicture}[
+    node distance=0.9cm and 1.2cm, % << giảm khoảng cách
+    block/.style={
+        rectangle,
+        draw=blue!70!black,
+        thick,
+        fill=blue!20,
+        rounded corners=4pt,
+        text width=8.6em,
+        align=center,
+        inner sep=4pt,
+        font=\small
+    },
+    line/.style={draw, -latex', thick, blue!70!black}
+]
 
-    \path [line] (load) -- (encode);
-    \path [line] (encode) -- (clean);
-    \path [line] (clean) -- (mine);
-    \path [line] (mine) -- (rules);
-  \end{tikzpicture}
-  \end{center}
+% Hàng trên
+\node[block] (load) {Load Data\\\texttt{groceries.csv}};
+\node[block, right=of load] (encode) {Encode\\Transaction Encoder};
+\node[block, right=of encode] (clean) {Cleaning\\7-step process};
 
-  \vspace{0.3cm}
+% Hàng dưới
+\node[block, below=of encode] (mine) {Mining\\Apriori / FP-Growth};
+\node[block, right=of mine] (rules) {Rules\\Association Rules};
 
-  \textbf{Parameters:}
-  \begin{itemize}
-    \item Min Support: [Run script for value]
-    \item Min Confidence: 0.25
-  \end{itemize}
+% Mũi tên
+\draw[line] (load) -- (encode);
+\draw[line] (encode) -- (clean);
+\draw[line] (clean.south) |- (mine.east);
+\draw[line] (mine) -- (rules);
+
+\end{tikzpicture}
+
+\vspace{0.3cm}
+
+\textbf{Tham số:}
+\begin{itemize}
+  \item Support tối thiểu: \textit{(run script để xác định)}
+  \item Confidence tối thiểu: 0.25
+\end{itemize}
+
 \end{frame}
 
 % =============================================================================
@@ -242,13 +279,13 @@
 % =============================================================================
 \section{TRIỂN KHAI}
 
-\begin{frame}{TOP FREQUENT ITEMS}
+\begin{frame}{CÁC ITEMS XUẤT HIỆN THƯỜNG XUYÊN NHẤT}
   \begin{table}
     \centering
     \small
     \begin{tabular}{|l|c|c|}
     \hline
-    \textbf{Product} & \textbf{Count} & \textbf{Support} \\
+    \textbf{Sản phẩm} & \textbf{Số lượng} & \textbf{Support} \\
     \hline
     Whole milk & 2222 & 31.69\% \\
     Other vegetables & 1766 & 25.19\% \\
@@ -259,28 +296,28 @@
     \end{tabular}
   \end{table}
 
-  \begin{block}{Insight:}
+  \begin{block}{Nhận xét:}
     \begin{itemize}
       \item Whole milk là sản phẩm phổ biến nhất
-      \item Được mua trong $\sim$32\% transactions
+      \item Xuất hiện trong $\sim$32\% giao dịch (transactions)
     \end{itemize}
   \end{block}
 \end{frame}
 
-\begin{frame}{TOP 20 FREQUENT PRODUCTS}
+\begin{frame}{TOP 20 SẢN PHẨM THƯỜNG XUYÊN NHẤT}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/02_top_20_frequent_products.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{ITEM FREQUENCY DISTRIBUTION}
+\begin{frame}{PHÂN PHỐI TẦN SUẤT ITEMS}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/03_item_frequency_distribution.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{ASSOCIATION RULES}
-  \textbf{Example Rules:}
+\begin{frame}{LUẬT KẾT HỢP}
+  \textbf{Ví dụ các luật (Rules):}
 
   \vspace{0.3cm}
 
@@ -305,35 +342,35 @@
   \vspace{0.5cm}
 
   \begin{center}
-    \textbf{Total:} 90 rules discovered
+    \textbf{Tổng cộng:} Phát hiện được 90 luật (rules)
   \end{center}
 \end{frame}
 
-\begin{frame}{TOP 10 PRODUCTS DISTRIBUTION}
+\begin{frame}{PHÂN PHỐI TOP 10 SẢN PHẨM}
   \begin{center}
     \includegraphics[width=0.8\textwidth,height=0.65\textheight,keepaspectratio]{../../../charts/04_top_10_products_pie_chart.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{SUPPORT VS CONFIDENCE}
+\begin{frame}{SUPPORT SO VỚI CONFIDENCE}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/05_support_vs_confidence_scatter.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{TOP 20 RULES BY LIFT}
+\begin{frame}{TOP 20 LUẬT THEO LIFT}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/06_top_20_rules_by_lift.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{RULES METRICS DISTRIBUTION}
+\begin{frame}{PHÂN PHỐI CÁC CHỈ SỐ CỦA LUẬT}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/07_rules_metrics_distribution_boxplot.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{METRICS CORRELATION HEATMAP}
+\begin{frame}{BIỂU ĐỒ NHIỆT TƯƠNG QUAN CÁC CHỈ SỐ}
   \begin{center}
     \includegraphics[width=0.7\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/08_metrics_correlation_heatmap.png}
   \end{center}
@@ -345,36 +382,36 @@
     \small
     \begin{tabular}{|l|c|c|c|}
     \hline
-    \textbf{Algorithm} & \textbf{Time} & \textbf{Memory} & \textbf{Scale} \\
+    \textbf{Thuật toán} & \textbf{Thời gian} & \textbf{Bộ nhớ} & \textbf{Khả năng mở rộng} \\
     \hline
-    Apriori & Baseline & High & Low \\
-    FP-Growth & 2-3x $\uparrow$ & Medium & Good \\
-    FP-Max & 3-5x $\uparrow$ & Low & Excel \\
+    Apriori & Cơ sở & Cao & Thấp \\
+    FP-Growth & 2-3x $\uparrow$ & Trung bình & Tốt \\
+    FP-Max & 3-5x $\uparrow$ & Thấp & Xuất sắc \\
     \hline
     \end{tabular}
   \end{table}
 
   \begin{alertblock}{Kết luận:}
     \begin{itemize}
-      \item FP-Growth tốt cho production
-      \item FP-Max tốt nhất cho large datasets
+      \item FP-Growth phù hợp cho môi trường production
+      \item FP-Max tốt nhất cho các dataset lớn
     \end{itemize}
   \end{alertblock}
 \end{frame}
 
-\begin{frame}{ALGORITHM EXECUTION TIME COMPARISON}
+\begin{frame}{SO SÁNH THỜI GIAN THỰC THI THUẬT TOÁN}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/09_algorithm_execution_time.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{FREQUENT ITEMSETS COUNT}
+\begin{frame}{SỐ LƯỢNG FREQUENT ITEMSETS}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/10_frequent_itemsets_count.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{TIME EFFICIENCY SCATTER}
+\begin{frame}{BIỂU ĐỒ PHÂN TÁN HIỆU SUẤT THỜI GIAN}
   \begin{center}
     \includegraphics[width=0.95\textwidth,height=0.7\textheight,keepaspectratio]{../../../charts/11_time_efficiency_scatter.png}
   \end{center}
@@ -386,28 +423,28 @@
 \section{HẠN CHẾ CỦA APRIORI}
 
 \begin{frame}{HẠN CHẾ CỦA APRIORI}
-  \textbf{1. Multiple Database Scans}
+  \textbf{1. Quét cơ sở dữ liệu nhiều lần}
   \begin{itemize}
-    \item K scans cho k-itemsets
-    \item Tốn I/O operations
+    \item Cần K lần quét cho k-itemsets
+    \item Tốn nhiều thao tác I/O
   \end{itemize}
 
-  \textbf{2. Large Candidate Sets}
+  \textbf{2. Tập ứng viên lớn (Large Candidate Sets)}
   \begin{itemize}
     \item Tăng trưởng theo cấp số nhân
-    \item 2$^k$ - 1 possible itemsets
+    \item Có thể có 2$^k$ - 1 itemsets
   \end{itemize}
 
-  \textbf{3. Memory Usage}
+  \textbf{3. Sử dụng bộ nhớ (Memory Usage)}
   \begin{itemize}
-    \item Lưu tất cả candidates
-    \item Khó scale với large datasets
+    \item Phải lưu tất cả các ứng viên (candidates)
+    \item Khó mở rộng (scale) với dataset lớn
   \end{itemize}
 
-  \textbf{4. Computational Cost}
+  \textbf{4. Chi phí tính toán (Computational Cost)}
   \begin{itemize}
-    \item Candidate generation tốn kém
-    \item Counting support expensive
+    \item Sinh ứng viên (candidate generation) tốn kém
+    \item Đếm support rất tốn kém
   \end{itemize}
 \end{frame}
 
@@ -417,80 +454,78 @@
 \section{CÁCH CẢI THIỆN}
 
 \begin{frame}{CẢI TIẾN 1: SAMPLING}
-  \begin{block}{Concept:}
+  \begin{block}{Ý tưởng:}
     \begin{itemize}
-      \item Mine trên sample (30\%)
-      \item Verify trên full dataset
-      \item Fast cho exploratory analysis
+      \item Khai phá trên mẫu dữ liệu (30\%)
+      \item Xác minh trên toàn bộ dataset
+      \item Nhanh cho phân tích khám phá (exploratory analysis)
     \end{itemize}
   \end{block}
 
-  \textbf{Implementation:}
+  \textbf{Triển khai:}
   \texttt{sampling\_based\_fim(df, min\_support, sample\_ratio=0.3)}
 \end{frame}
 
 \begin{frame}{CẢI TIẾN 2: DHP (HASH-BASED)}
-  \begin{block}{Concept:}
+  \begin{block}{Ý tưởng:}
     \begin{itemize}
-      \item Hash pruning giảm candidates
-      \item 2-3 database scans
-      \item Faster candidate reduction
+      \item Sử dụng hash để tỉa bớt candidates
+      \item Chỉ cần 2-3 lần quét cơ sở dữ liệu
+      \item Giảm candidates nhanh hơn
     \end{itemize}
   \end{block}
 
-  \textbf{Implementation:}
+  \textbf{Triển khai:}
   \texttt{dhp\_algorithm(transactions, min\_support, hash\_table\_size)}
 \end{frame}
 
 \begin{frame}{CẢI TIẾN 3: TRANSACTION REDUCTION}
-  \begin{block}{Concept:}
+  \begin{block}{Ý tưởng:}
     \begin{itemize}
-      \item Loại transactions không chứa frequent items
-      \item Giảm database size qua iterations
-      \item Memory-efficient
+      \item Loại bỏ các giao dịch không chứa frequent items
+      \item Giảm kích thước cơ sở dữ liệu qua các vòng lặp
+      \item Tiết kiệm bộ nhớ
     \end{itemize}
   \end{block}
 
-  \textbf{Implementation:}
+  \textbf{Triển khai:}
   \texttt{transaction\_reduction\_apriori(df, min\_support)}
 \end{frame}
 
 \begin{frame}{CẢI TIẾN 4: ECLAT (VERTICAL)}
-  \begin{block}{Concept:}
+  \begin{block}{Ý tưởng:}
     \begin{itemize}
-      \item Vertical tid-lists format
-      \item Fast intersection operations
-      \item Excellent cho sparse datasets
+      \item Sử dụng định dạng tid-lists dọc (vertical)
+      \item Phép giao (intersection) nhanh
+      \item Xuất sắc cho dataset thưa (sparse)
     \end{itemize}
   \end{block}
 
-  \textbf{Implementation:}
+  \textbf{Triển khai:}
   \texttt{eclat\_algorithm(df, min\_support)}
 \end{frame}
 
 \begin{frame}{CẢI TIẾN 5: DIC (DYNAMIC COUNTING)}
-  \begin{block}{Concept:}
+  \begin{block}{Ý tưởng:}
     \begin{itemize}
-      \item Interleaved counting
-      \item Ít database scans
-      \item Faster convergence
+      \item Đếm xen kẽ (interleaved counting)
+      \item Ít lần quét cơ sở dữ liệu hơn
     \end{itemize}
   \end{block}
 
-  \textbf{Implementation:}
+  \textbf{Triển khai:}
   \texttt{dic\_algorithm(df, min\_support)}
 \end{frame}
 
 \begin{frame}{CẢI TIẾN 6: PARTITIONING}
-  \begin{block}{Concept:}
+  \begin{block}{Ý tưởng:}
     \begin{itemize}
-      \item Divide database into partitions
-      \item Mine locally, verify globally
-      \item 2 database scans, guarantees completeness
+      \item Chia cơ sở dữ liệu thành các phân vùng (partitions)
+      \item Khai phá cục bộ, xác minh toàn cục
     \end{itemize}
   \end{block}
 
-  \textbf{Implementation:}
+  \textbf{Triển khai:}
   \texttt{partitioning\_apriori(df, min\_support, n\_partitions=5)}
 \end{frame}
 
@@ -502,30 +537,30 @@
 \begin{frame}{KHUYẾN NGHỊ SỬ DỤNG}
   \begin{columns}
     \column{0.33\textwidth}
-      \begin{block}{Small (< 10K)}
+      \begin{block}{Nhỏ (< 10K)}
         Apriori hoặc ECLAT\\
         \small{Đơn giản, dễ hiểu}
       \end{block}
 
     \column{0.33\textwidth}
-      \begin{block}{Medium (10K-1M)}
+      \begin{block}{Trung bình (10K-1M)}
         FP-Growth hoặc DIC\\
         \small{Hiệu suất tốt}
       \end{block}
 
     \column{0.33\textwidth}
-      \begin{block}{Large (> 1M)}
+      \begin{block}{Lớn (> 1M)}
         FP-Max, Partitioning\\
-        \small{Scalable}
+        \small{Dễ mở rộng}
       \end{block}
   \end{columns}
 
   \vspace{0.5cm}
 
   \begin{itemize}
-    \item \textbf{Real-time/Streaming}: Sampling-based approaches
-    \item \textbf{Sparse Datasets}: ECLAT (vertical format rất hiệu quả)
-    \item \textbf{Memory Constrained}: Transaction Reduction hoặc Partitioning
+    \item \textbf{Thời gian thực/Streaming}: Các phương pháp dựa trên sampling
+    \item \textbf{Dataset thưa (Sparse)}: ECLAT (định dạng vertical rất hiệu quả)
+    \item \textbf{Bộ nhớ hạn chế}: Transaction Reduction hoặc Partitioning
   \end{itemize}
 \end{frame}
 
@@ -537,10 +572,10 @@
 \begin{frame}{KẾT LUẬN}
   \begin{block}{Điểm chính:}
     \begin{itemize}
-      \item Apriori: Foundation cho frequent itemset mining
-      \item 6 thuật toán cải tiến đã được triển khai
-      \item Giảm 30-50\% execution time với các kỹ thuật tối ưu
-      \item FP-Growth/FP-Max tốt cho production
+      \item Apriori: Nền tảng cho khai phá frequent itemsets
+      \item Đã triển khai 6 thuật toán cải tiến
+      \item Giảm 30-50\% thời gian thực thi với các kỹ thuật tối ưu
+      \item FP-Growth/FP-Max phù hợp cho môi trường production
     \end{itemize}
   \end{block}
 
@@ -554,17 +589,15 @@
 
   \textbf{Ứng dụng thực tế:}
   \begin{itemize}
-    \item Retail \& E-commerce, Healthcare, Web usage mining, Bioinformatics
+    \item Bán lẻ (Retail) \& Thương mại điện tử, Chăm sóc sức khỏe, Khai phá sử dụng web, Tin sinh học
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \begin{center}
-    \Huge \textbf{Thank You!}
+    \Huge \textbf{CẢM ƠN ĐÃ LẮNG NGHE}
 
-    \vspace{1cm}
 
-    \Large Questions?
   \end{center}
 \end{frame}
 
