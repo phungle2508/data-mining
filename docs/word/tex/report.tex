@@ -492,11 +492,15 @@ Partitioning & 173 & 0.8112 & Divide \& conquer \\
 
 \textbf{Phân tích:}
 \begin{itemize}
-    \item Apriori: Đơn giản, dễ hiểu nhưng kém hiệu quả với dataset lớn
-    \item FP-Growth: Cân bằng tốt giữa hiệu suất và bộ nhớ
-    \item FP-Max: Tối ưu cho applications chỉ cần maximal frequent itemsets
-    \item Sampling: Nhanh nhất nhưng không đầy đủ
-    \item ECLAT: Hiệu quả cho sparse datasets
+    \item \textbf{Apriori}: Đơn giản, dễ hiểu nhưng kém hiệu quả với dataset lớn. Phù hợp cho mục đích học tập và các tập dữ liệu nhỏ.
+    \item \textbf{FP-Growth}: Cân bằng tốt giữa hiệu suất và bộ nhớ. Cấu trúc dạng cây giúp tránh việc sinh ứng viên (candidate generation).
+    \item \textbf{FP-Max}: Tối ưu cho các ứng dụng chỉ cần tìm maximal frequent itemsets. Tiết kiệm bộ nhớ nhưng thời gian thực thi cao.
+    \item \textbf{Sampling}: Nhanh nhất (0.0351s) nhưng kết quả không đầy đủ. Thích hợp cho phân tích khám phá và các ứng dụng thời gian thực.
+    \item \textbf{DHP (Hash-based)}: Sử dụng bảng băm (hash table) để loại bớt ứng viên sớm. Hiệu quả hơn Apriori cơ bản với thời gian 0.1932s.
+    \item \textbf{Transaction Reduction}: Giảm kích thước cơ sở dữ liệu qua các vòng lặp. Tiết kiệm bộ nhớ với thời gian 0.0736s.
+    \item \textbf{ECLAT (Vertical)}: Sử dụng định dạng danh sách giao dịch (tid-lists), rất hiệu quả cho các dataset thưa (sparse). Thời gian thực thi tốt (0.0683s).
+    \item \textbf{DIC (Dynamic Counting)}: Đếm xen kẽ giảm số lần quét cơ sở dữ liệu nhưng chi phí xử lý cao (3.4055s).
+    \item \textbf{Partitioning}: Phương pháp chia để trị, cho phép xử lý song song. Thời gian 0.8112s, phù hợp cho các dataset lớn.
 \end{itemize}
 
 % =============================================================================

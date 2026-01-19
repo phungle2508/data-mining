@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1768816495.67473 "/home/phungvip/Desktop/workspace2/data-mining-project/docs/word/tex/report.tex" "report.pdf" "report" 1768816496.73807 0
+["pdflatex"] 1768822518.51612 "/home/phungvip/Desktop/workspace2/data-mining-project/docs/word/tex/report.tex" "report.pdf" "report" 1768822519.77814 0
   "../../../charts/01_individual_product_occurrence.png" 1768152013.56419 83087 0682da4fac118175586ad2ea921556e0 ""
   "../../../charts/02_top_20_frequent_products.png" 1768152016.05178 76033 b61b7b0d7990c2fc332fe532707f1536 ""
   "../../../charts/03_item_frequency_distribution.png" 1768152019.0107 23570 74fa477a709acb9a8b2cd77ab1294eb2 ""
@@ -12,7 +12,7 @@
   "../../../charts/10_frequent_itemsets_count.png" 1768152036.06072 57844 df11559a9a4185c8d094d29bda696c84 ""
   "../../../charts/11_time_efficiency_scatter.png" 1768152124.0698 54462 da22a83f5e12d668666c0895ee27c02a ""
   "/etc/texmf/web2c/texmf.cnf" 1763905416.59649 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/phungvip/Desktop/workspace2/data-mining-project/docs/word/tex/report.tex" 1768816495.45921 23360 04d2cfa32c2862bb6c80a466d1499148 ""
+  "/home/phungvip/Desktop/workspace2/data-mining-project/docs/word/tex/report.tex" 1768822518.05149 24505 da2a3f64b25454f2907f100c3fdf1928 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/vntex/t5.enc" 1136849721 7824 21ade6c3c7fd67cb4ace8dbc91c53118 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -131,10 +131,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1766488664 198341 42d69474941b2ac8ebd9d4d42a15bc3e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1766488720 2103974 6e9b5525adf17c57728bacad06738619 ""
-  "report.aux" 1768816496.67182 6598 f772a6e33e3919d79c65b484a2f6d7bf "pdflatex"
-  "report.out" 1768816496.67282 4928 19f6c9bc6436a1ccfdf6814356d6f766 "pdflatex"
-  "report.tex" 1768816495.45921 23360 04d2cfa32c2862bb6c80a466d1499148 ""
-  "report.toc" 1768816496.67282 2531 6e7f95c6a1df7be32d3669dfc649887d "pdflatex"
+  "report.aux" 1768822519.71083 6598 f772a6e33e3919d79c65b484a2f6d7bf "pdflatex"
+  "report.out" 1768822519.71183 4928 19f6c9bc6436a1ccfdf6814356d6f766 "pdflatex"
+  "report.tex" 1768822518.05149 24505 da2a3f64b25454f2907f100c3fdf1928 ""
+  "report.toc" 1768822519.71247 2531 6e7f95c6a1df7be32d3669dfc649887d "pdflatex"
   (generated)
   "report.aux"
   "report.log"
