@@ -194,16 +194,57 @@ Nhóm các giá trị gần nhau vào cùng một cluster.
 **Câu b)** Vẽ biểu đồ Boxplot cho age và %fat
 
 **Lời giải:**
+
+**Cho age:**
+
+Dữ liệu đã sắp xếp: 23, 23, 27, 27, 39, 41, 47, 49, 50
+
+**Bước 1: Tính các quartiles**
+
+Với n = 9 giá trị:
+
+- **Q2 (Median - Trung vị):** Vị trí thứ (n+1)/2 = (9+1)/2 = 5
+  - Giá trị tại vị trí 5: **Q2 = 39**
+
+- **Q1 (Tứ phân vị thứ nhất - 25%):** Vị trí thứ (n+1)/4 = (9+1)/4 = 2.5
+  - Interpolation giữa vị trí 2 và 3:
+  ```
+  Q1 = (value[2] + value[3]) / 2
+  Q1 = (23 + 27) / 2 = 50 / 2 = 25
+  ```
+
+- **Q3 (Tứ phân vị thứ ba - 75%):** Vị trí thứ 3(n+1)/4 = 3(9+1)/4 = 7.5
+  - Interpolation giữa vị trí 7 và 8:
+  ```
+  Q3 = (value[7] + value[8]) / 2
+  Q3 = (47 + 49) / 2 = 96 / 2 = 48
+  ```
+
+**Bước 2: Tính IQR (Interquartile Range)**
+
 ```
-Cho age:
-Q1 = 25 (vị trí 25%)
-Q2 = 39 (median)
-Q3 = 48 (vị trí 75%)
+IQR = Q3 - Q1
 IQR = 48 - 25 = 23
-Lower fence = 25 - 1.5×23 = -9.5
-Upper fence = 48 + 1.5×23 = 82.5
-Không có outliers (tất cả giá trị trong khoảng [-9.5, 82.5])
 ```
+
+**Bước 3: Tính các giới hạn (fences)**
+
+```
+Lower fence = Q1 - 1.5 × IQR
+Lower fence = 25 - 1.5 × 23
+Lower fence = 25 - 34.5 = -9.5
+
+Upper fence = Q3 + 1.5 × IQR
+Upper fence = 48 + 1.5 × 23
+Upper fence = 48 + 34.5 = 82.5
+```
+
+**Bước 4: Xác định outliers**
+
+- Khoảng chấp nhận: [-9.5, 82.5]
+- Kiểm tra các giá trị: 23, 23, 27, 27, 39, 41, 47, 49, 50
+- Tất cả giá trị đều nằm trong khoảng [-9.5, 82.5]
+- **Kết luận: Không có outliers**
 
 **Câu c)** Vẽ biểu đồ phân tán (scatter plot) dựa trên age và %fat
 
