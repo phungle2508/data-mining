@@ -285,9 +285,80 @@ Upper fence = 35 + 1.5×15 = 57.5
 Outliers: 70 (vượt quá upper fence)
 ```
 
-### Bài 3: Chuẩn hóa min-max
+### Bài 3: Phân vị giá trị của các phương pháp chuẩn hóa sau đây là gì?
 
-**Đề bài:** Sử dụng các phương pháp sau để chuẩn hóa tập dữ liệu: 200, 300, 400, 600, 1000
+**Câu a)** Chuẩn hóa min-max
+
+**Lời giải:**
+```
+Phân vị: Chuyển đổi dữ liệu về khoảng [new_min, new_max] (thường là [0, 1])
+
+Công thức: v' = (v - min(A)) / (max(A) - min(A)) × (new_max - new_min) + new_min
+
+Ưu điểm:
+- Giữ được khoảng giá trị mong muốn
+- Dễ hiểu và triển khai
+
+Nhược điểm:
+- Nhạy cảm với outliers
+- Khi có giá trị mới ngoài khoảng [min, max] cũ, cần chuẩn hóa lại
+```
+
+**Câu b)** Chuẩn hóa z-score
+
+**Lời giải:**
+```
+Phân vị: Chuyển đổi dữ liệu về phân phối chuẩn với mean = 0, std = 1
+
+Công thức: v' = (v - μ) / σ
+
+Ưu điểm:
+- Không phụ thuộc vào khoảng giá trị
+- Phù hợp với dữ liệu phân phối chuẩn
+- Giữ được thông tin về outliers
+
+Nhược điểm:
+- Yêu cầu dữ liệu tuân theo phân phối chuẩn
+- Kết quả có thể nằm ngoài khoảng cố định
+```
+
+**Câu c)** Chuẩn hóa z-score sử dụng độ lệch tuyệt đối trung bình thay vì độ lệch chuẩn
+
+**Lời giải:**
+```
+Phân vị: Sử dụng MAD (Mean Absolute Deviation) thay vì Standard Deviation
+
+Công thức: v' = (v - μ) / MAD
+Trong đó: MAD = Σ|v - μ| / n
+
+Ưu điểm:
+- Ít nhạy cảm với outliers hơn z-score thông thường
+- Robust hơn với dữ liệu có nhiễu
+
+Nhược điểm:
+- Ít phổ biến hơn z-score chuẩn
+- Khó diễn giải hơn
+```
+
+**Câu d)** Chuẩn hóa bằng cách chia tỷ lệ thập phân
+
+**Lời giải:**
+```
+Phân vị: Chia dữ liệu cho lũy thừa của 10
+
+Công thức: v' = v / 10^j
+Trong đó: j là số nguyên nhỏ nhất sao cho max(|v'|) < 1
+
+Ưu điểm:
+- Rất đơn giản
+- Nhanh chóng
+
+Nhược điểm:
+- Mất thông tin về phân phối
+- Phụ thuộc vào giá trị lớn nhất
+```
+
+### Bài 4: Sử dụng các phương pháp sau để chuẩn hóa tập dữ liệu: 200, 300, 400, 600, 1000
 
 **Câu a)** Chuẩn hóa min-max bằng cách đặt min = 0 và max = 1
 
@@ -302,8 +373,6 @@ v' = (v - 200) / (1000 - 200)
 600 → (600-200)/800 = 0.5
 1000 → (1000-200)/800 = 1
 ```
-
-### Bài 4: Chuẩn hóa z-score
 
 **Câu b)** Chuẩn hóa z-score
 
@@ -320,6 +389,38 @@ Std σ = √80000 ≈ 282.84
 400 → (400-500)/282.84 ≈ -0.35
 600 → (600-500)/282.84 ≈ 0.35
 1000 → (1000-500)/282.84 ≈ 1.77
+```
+
+**Câu c)** Chuẩn hóa z-score sử dụng độ lệch tuyệt đối trung bình thay vì độ lệch chuẩn
+
+**Lời giải:**
+```
+Mean μ = 500 (đã tính ở câu b)
+
+MAD = (|200-500| + |300-500| + |400-500| + |600-500| + |1000-500|) / 5
+    = (300 + 200 + 100 + 100 + 500) / 5
+    = 1200 / 5 = 240
+
+200 → (200-500)/240 = -300/240 = -1.25
+300 → (300-500)/240 = -200/240 ≈ -0.83
+400 → (400-500)/240 = -100/240 ≈ -0.42
+600 → (600-500)/240 = 100/240 ≈ 0.42
+1000 → (1000-500)/240 = 500/240 ≈ 2.08
+```
+
+**Câu d)** Chuẩn hóa bằng cách chia tỷ lệ thập phân
+
+**Lời giải:**
+```
+max = 1000 → cần j = 4 (vì 10^4 = 10000 > 1000)
+
+v' = v / 10000
+
+200 → 200/10000 = 0.02
+300 → 300/10000 = 0.03
+400 → 400/10000 = 0.04
+600 → 600/10000 = 0.06
+1000 → 1000/10000 = 0.1
 ```
 
 ### Bài 5: Sử dụng dữ liệu về tuổi từ Bài 2
@@ -415,14 +516,205 @@ Cluster 3: {72, 92}
 Cluster 4: {204, 215}
 ```
 
-### Bài 8-11: Xác định và xử lý outliers
+### Bài 8: Phân vị và xác định outliers
 
-**Các bước chung:**
-1. Sắp xếp dữ liệu
-2. Tính Q1, Q2, Q3
-3. Tính IQR = Q3 - Q1
-4. Xác định outliers: giá trị < Q1 - 1.5×IQR hoặc > Q3 + 1.5×IQR
-5. Loại bỏ hoặc xử lý outliers
+**Đề bài:** Cho tập dữ liệu: 45, 37, 88, 60, 99, 35, 1, 50, 55, 48
+
+**Câu a)** Hãy xác định vị trí tập dữ liệu đã cho
+
+**Lời giải:**
+```
+Sắp xếp dữ liệu: 1, 35, 37, 45, 48, 50, 55, 60, 88, 99
+n = 10
+
+Q1 = vị trí (10+1)/4 = 2.75 → Interpolation giữa vị trí 2 và 3
+Q1 = 35 + 0.75×(37-35) = 35 + 1.5 = 36.5
+
+Q2 (Median) = vị trí (10+1)/2 = 5.5 → Interpolation giữa vị trí 5 và 6
+Q2 = (48 + 50)/2 = 49
+
+Q3 = vị trí 3(10+1)/4 = 8.25 → Interpolation giữa vị trí 8 và 9
+Q3 = 60 + 0.25×(88-60) = 60 + 7 = 67
+```
+
+**Câu b)** Xác định các giá trị là ngoại lệ (Outliers) dựa trên vị phân vị tìm được
+
+**Lời giải:**
+```
+IQR = Q3 - Q1 = 67 - 36.5 = 30.5
+
+Lower fence = Q1 - 1.5×IQR = 36.5 - 1.5×30.5 = 36.5 - 45.75 = -9.25
+Upper fence = Q3 + 1.5×IQR = 67 + 1.5×30.5 = 67 + 45.75 = 112.75
+
+Kiểm tra các giá trị:
+- Giá trị 1 < -9.25? Không (1 > -9.25)
+- Giá trị 99 > 112.75? Không
+
+Kết luận: Không có outliers trong tập dữ liệu này
+```
+
+### Bài 9: Phân vị và xác định outliers (2)
+
+**Đề bài:** Cho tập dữ liệu: 9, 1, 8, 7, 9, 5, 8, 5, 4, 10, 15
+
+**Câu c)** Hãy xác định vị trí tập dữ liệu đã cho
+
+**Lời giải:**
+```
+Sắp xếp dữ liệu: 1, 4, 5, 5, 7, 8, 8, 9, 9, 10, 15
+n = 11
+
+Q1 = vị trí (11+1)/4 = 3 → Q1 = 5
+Q2 = vị trí (11+1)/2 = 6 → Q2 = 8
+Q3 = vị trí 3(11+1)/4 = 9 → Q3 = 9
+```
+
+**Câu d)** Xác định các giá trị là ngoại lệ (Outliers) dựa trên vị phân vị tìm được
+
+**Lời giải:**
+```
+IQR = Q3 - Q1 = 9 - 5 = 4
+
+Lower fence = Q1 - 1.5×IQR = 5 - 1.5×4 = 5 - 6 = -1
+Upper fence = Q3 + 1.5×IQR = 9 + 1.5×4 = 9 + 6 = 15
+
+Kiểm tra các giá trị:
+- Tất cả giá trị đều nằm trong khoảng [-1, 15]
+
+Kết luận: Không có outliers
+```
+
+### Bài 10: Phân tích dữ liệu YOBirth và Score
+
+**Đề bài:** Cho tập dữ liệu về điểm số môn học X của sinh viên
+
+| id | YOBirth | Score |
+|----|---------|-------|
+| 1  | 2004    | 8     |
+| 2  | 2006    | 5     |
+| 3  | 2004    | 9.5   |
+| 4  | 2005    | 5.2   |
+| 5  | 2007    | 9.5   |
+| 6  | 2002    | 8.5   |
+| 7  | 2006    | 10    |
+| 8  | 2005    | 9.5   |
+| 9  | 1999    | 5.6   |
+| 10 | 2015    | 1.2   |
+| 11 | 2004    | 6.4   |
+| 12 | 2005    | 9.5   |
+| 13 | 2006    | 3.4   |
+
+**Câu a)** Hãy tìm kiếm và trên từng cột YOBirth và Score
+
+**Lời giải:**
+
+**Cho YOBirth:**
+```
+Dữ liệu sắp xếp: 1999, 2002, 2004, 2004, 2004, 2005, 2005, 2005, 2006, 2006, 2006, 2006, 2015
+n = 13
+
+Q1 = vị trí (13+1)/4 = 3.5 → Q1 = 2004
+Q2 = vị trí (13+1)/2 = 7 → Q2 = 2005
+Q3 = vị trí 3(13+1)/4 = 10.5 → Q3 = 2006
+
+IQR = 2006 - 2004 = 2
+Lower fence = 2004 - 1.5×2 = 2001
+Upper fence = 2006 + 1.5×2 = 2009
+
+Outliers: 1999 (< 2001), 2015 (> 2009)
+```
+
+**Cho Score:**
+```
+Dữ liệu sắp xếp: 1.2, 3.4, 5, 5.2, 5.6, 6.4, 8, 8.5, 9.5, 9.5, 9.5, 9.5, 10
+n = 13
+
+Q1 = vị trí 3.5 → Q1 = 5.2
+Q2 = vị trí 7 → Q2 = 8
+Q3 = vị trí 10.5 → Q3 = 9.5
+
+IQR = 9.5 - 5.2 = 4.3
+Lower fence = 5.2 - 1.5×4.3 = -1.25
+Upper fence = 9.5 + 1.5×4.3 = 15.95
+
+Outliers: Không có (tất cả giá trị nằm trong khoảng [-1.25, 15.95])
+```
+
+**Câu b)** Sử dụng tứ phân vị tìm được xác định giá trị ngoại lệ/Outliers trên cột YOBirth và Score
+
+**Lời giải:**
+- **YOBirth:** Có 2 outliers là 1999 và 2015
+- **Score:** Không có outliers
+
+### Bài 11: Tính toán thống kê mô tả
+
+**Đề bài:** Cho tập dữ liệu về điểm số môn học X của sinh viên (như Bài 10)
+
+| ID | DV  | Điểm |
+|----|-----|------|
+| 1  | 1   |      |
+| 2  | 2NT | 8    |
+| 3  | 1   | 6    |
+| 4  | 2   | 9    |
+| 5  | 3   | 5    |
+| 6  | 2   | 7    |
+| 7  | 5   | 6    |
+| 8  | 2NT | 8    |
+| 9  | 1   | 9    |
+| 10 | 1   | 7    |
+| 11 |     | 6    |
+| 12 | 1   | 8    |
+
+**Câu a)** Hãy điền giá trị thiếu trên thuộc tính KV bằng yếu vị (mode)
+
+**Lời giải:**
+```
+Đếm tần suất các giá trị trong cột DV:
+- 1: xuất hiện 5 lần
+- 2: xuất hiện 1 lần
+- 2NT: xuất hiện 2 lần
+- 3: xuất hiện 1 lần
+- 5: xuất hiện 1 lần
+
+Mode (yếu vị) = 1 (xuất hiện nhiều nhất)
+
+Điền vào các ô trống:
+- ID 1: DV = 1
+- ID 11: DV = 1
+```
+
+**Câu b)** Hãy điền giá trị thiếu trên thuộc tính Điểm bởi:
+
+**+ Giá trị trung bình**
+```
+Các điểm hiện có: 8, 6, 9, 5, 7, 6, 8, 9, 7, 6, 8
+Mean = (8+6+9+5+7+6+8+9+7+6+8) / 11 = 79 / 11 ≈ 7.18
+
+Điền vào ID 1: Điểm = 7.18 (hoặc làm tròn = 7)
+```
+
+**+ Trung vị**
+```
+Sắp xếp các điểm: 5, 6, 6, 6, 7, 7, 8, 8, 8, 9, 9
+n = 11
+Median = vị trí (11+1)/2 = 6 → Median = 7
+
+Điền vào ID 1: Điểm = 7
+```
+
+**+ Yếu vị**
+```
+Đếm tần suất:
+- 5: 1 lần
+- 6: 3 lần
+- 7: 2 lần
+- 8: 3 lần
+- 9: 2 lần
+
+Mode = 6 hoặc 8 (cả hai đều xuất hiện 3 lần)
+
+Điền vào ID 1: Điểm = 6 hoặc 8
+```
 
 ## VII. Tổng Kết
 
